@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createStore } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import { Provider } from 'react-redux';
+import { mainReducer } from './redux';
+import { AuthProvider } from './hook/useAuth';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+let initialState = { loginReducer: [{ id: '0', completed: false, name: 'Login out' }] }
+const store= createStore(mainReducer, initialState);
 root.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <BrowserRouter>   
+    <AuthProvider>
+    <Provider  store={store}>
+    <App/>
+    </Provider>
+    </AuthProvider>
+    </BrowserRouter>
+    </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
